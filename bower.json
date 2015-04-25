@@ -1,0 +1,23 @@
+{
+  "name": "xp-overlay",
+  "license": "BSD-3-Clause",
+  "version": "0.8.0",
+  "description": "This component is used to display itself above all others.",
+  "authors": [
+    "Giuliano Rullo <g.rullo@expandjs.com>",
+    "Maurizio Stefàno <m.stefano@expandjs.com>",
+    "Robert Manolea <r.manolea@expandjs.com>"
+  ],
+  "main": [
+    "xp-overlay.html"
+  ],
+  "keywords": [
+    "web-components"
+  ],
+  "dependencies": {
+    "expandjs": "ExpandJS/expandjs",
+    "xp-overlay-state": "ExpandJS/xp-overlay-state",
+    "xp-targeter": "ExpandJS/xp-targeter",
+    "polymer": "Polymer/polymer#^0.5"
+  }
+}

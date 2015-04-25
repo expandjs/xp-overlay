@@ -1,0 +1,215 @@
+<!--
+@license
+Copyright (c) 2015 The expand.js authors. All rights reserved.
+This code may only be used under the BSD style license found at https://expandjs.github.io/LICENSE.txt
+The complete set of authors may be found at https://expandjs.github.io/AUTHORS.txt
+The complete set of contributors may be found at https://expandjs.github.io/CONTRIBUTORS.txt
+-->
+
+<!--
+This component is used to display itself above all others.
+
+@component xp-overlay
+@description This component is used to display itself above all others.
+@mixin xp-targeter http://www.expandjs.com/components/xp-targeter
+
+@dependency polymer Polymer/polymer#^0.5
+@dependency expandjs ExpandJS/expandjs
+@dependency xp-overlay-state ExpandJS/xp-overlay-state
+@dependency xp-targeter ExpandJS/xp-targeter
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../expandjs/expandjs.html">
+<link rel="import" href="../xp-overlay-state/xp-overlay-state.html">
+<link rel="import" href="../xp-targeter/xp-targeter.html">
+
+<polymer-element name="xp-overlay" constructor="XPOverlayElement" attributes="autoCenter autoHideDisabled context data position showed target">
+
+    <template>
+        <link rel="stylesheet" href="../xp-overlay-state/xp-overlay-state.css">
+        <style>
+            :host {
+                margin: 16px;
+            }
+
+            :host #xpOverlayWrapper {
+                background: inherit;
+                min-height: 100%;
+                overflow: auto;
+            }
+        </style>
+        <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" data="{{data}}" showed="{{showed}}" target="{{target}}"></template>
+        <div id="xpOverlayWrapper"><content id="content"></content></div>
+    </template>
+
+    <script>
+        XPComponent({
+
+            // MIXINS
+            mixins: ['xp-targeter'],
+
+            /*********************************************************************/
+
+            /**
+             * Hides the overlay.
+             *
+             * @method hide
+             * @returns {Element}
+             */
+            hide: function () {
+                var self = this;
+                self.$.xpOverlayState.hide();
+                return self;
+            },
+
+            /**
+             * Shows the overlay.
+             *
+             * @method show
+             * @param {Element | string} target
+             * @param {*} [data]
+             * @returns {Element}
+             */
+            show: function (target, data) {
+                var self = this;
+                self.$.xpOverlayState.show(target, data);
+                return self;
+            },
+
+            /**
+             * Toggles the overlay.
+             *
+             * @method toggle
+             * @param {Element | string} target
+             * @param {*} [data]
+             * @returns {Element}
+             */
+            toggle: function (target, data) {
+                var self = this;
+                self.$.xpOverlayState.toggle(target, data);
+                return self;
+            },
+
+            /*********************************************************************/
+
+            /**
+             * Aligns the overlay.
+             *
+             * @method align
+             * @returns {Element}
+             * @private
+             */
+            align: function () {
+
+                // Vars
+                var self   = this,
+                    showed = self.$.xpOverlayState.showed,
+                    target = showed && self.findTarget();
+
+                // Hiding
+                if (!target) { return self.hide(); }
+
+                // Aligning
+                if (showed) { XP.alignElement(self, target, self.position, self.autoCenter); }
+
+                return self;
+            },
+
+            /*********************************************************************/
+
+            // OBSERVE
+            observe: {
+                'autoCenter position showed target': 'align'
+            },
+
+            // PUBLISH
+            publish: {
+
+                /**
+                 * If set to true, the overlay is center aligned.
+                 *
+                 * @attribute autoCenter
+                 * @type boolean
+                 * @default false
+                 */
+                autoCenter: {reflect: true, value: false},
+
+                /**
+                 * If set to true, the overlay will not close by clicking outside.
+                 *
+                 * @attribute autoHideDisabled
+                 * @type boolean
+                 * @default false
+                 */
+                autoHideDisabled: {reflect: true, value: false},
+
+                /**
+                 * The context element.
+                 *
+                 * @attribute context
+                 * @type Element
+                 */
+                context: {reflect: false, value: null},
+
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 */
+                data: {reflect: false, value: null},
+
+                /**
+                 * The overlay position relative to the target.
+                 *
+                 * 'over' is over the target.
+                 *
+                 * 'aside' is to the side of the target.
+                 *
+                 * 'baseline' is underneath the target.
+                 *
+                 * @attribute position
+                 * @type "aside" | "baseline" | "over"
+                 * @default "over"
+                 */
+                position: {reflect: true, value: 'over'},
+
+                /**
+                 * If set to true, the overlay is showed.
+                 *
+                 * @attribute showed
+                 * @type boolean
+                 * @default false
+                 */
+                showed: {reflect: true, value: false},
+
+                /**
+                 * The `id` of the targeted element or the element itself.
+                 *
+                 * @attribute target
+                 * @type Element | string
+                 */
+                target: {reflect: false, value: null}
+            },
+
+            /**
+             * The list of positions.
+             *
+             * @property positions
+             * @type Array
+             * @default ["aside", "baseline", "over"]
+             * @readonly
+             */
+            positions: ['aside', 'baseline', 'over'],
+
+            /*********************************************************************/
+
+            // LISTENER
+            ready: function () {
+                XP.listen('resize', this.align.bind(this));
+            }
+        });
+    </script>
+
+</polymer-element>
