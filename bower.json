@@ -1,8 +1,8 @@
 {
   "name": "xp-overlay",
   "license": "BSD-3-Clause",
-  "version": "0.8.4",
-  "description": "This element is used to display itself above all others.",
+  "version": "0.8.5",
+  "description": "A custom element used to create an overlay",
   "homepage": "http://www.expandjs.com/elements/xp-overlay",
   "authors": [
     "Giuliano Rullo <g.rullo@expandjs.com>",
