@@ -22,9 +22,9 @@
     "**/.*"
   ],
   "dependencies": {
-    "expandjs": "ExpandJS/expandjs",
-    "xp-overlay-state": "ExpandJS/xp-overlay-state",
-    "xp-targeter": "ExpandJS/xp-targeter",
+    "expandjs": "ExpandJS/expandjs#alpha",
+    "xp-overlay-state": "ExpandJS/xp-overlay-state#alpha",
+    "xp-targeter": "ExpandJS/xp-targeter#alpha",
     "polymer": "Polymer/polymer#^0.5"
   }
 }
