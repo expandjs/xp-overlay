@@ -29,24 +29,24 @@ This element is used to display itself above all others.
 
 <dom-module id="xp-overlay">
 
-    <link rel="import" type="css" href="../xp-overlay-behavior/xp-overlay-behavior.css">
-
-    <style>
-        :host {
-            margin: 16px;
-        }
-
-        :host #xpOverlayWrapper {
-            background: inherit;
-            height: 100%;
-            overflow: auto;
-        }
-    </style>
-
     <template>
+
+        <style include="xp-overlay-styles">
+            :host {
+                margin: 16px;
+            }
+
+            :host #xpOverlayWrapper {
+                background: inherit;
+                height: 100%;
+                overflow: auto;
+            }
+        </style>
+
         <div id="xpOverlayWrapper">
             <content id="content"></content>
         </div>
+
     </template>
 
     <script>
