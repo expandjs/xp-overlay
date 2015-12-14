@@ -7,46 +7,37 @@ The complete set of contributors may be found at https://expandjs.github.io/CONT
 -->
 
 <!--
-This element is used to display itself above all others.
+A custom element used to display a container above others.
 
 @element xp-overlay
-@description A custom element used to create an overlay
-@keywords web app, html5, expandjs, web-components
+@description A custom element used to display a container above others.
+@keywords expandjs, web app, custom elements, web-components
 @group containers
+
 @homepage http://expandjs.com/elements/xp-overlay
 @repository https://github.com/ExpandJS/xp-overlay
 
-@behavior xp-overlay-behavior /bower_components/xp-overlay-behavior/xp-overlay-behavior.html
+@behavior xp-overlay-behavior /bower_components/xp-overlay/xp-overlay-behavior.html
 
-@dependency polymer Polymer/polymer#^1.1.0
-@dependency expandjs ExpandJS/expandjs#0.9.11
-@dependency xp-overlay-behavior ExpandJS/xp-overlay-behavior#0.9.11
+@dependency polymer Polymer/polymer#^1.2.0
+@dependency expandjs ExpandJS/expandjs#0.10.0
 -->
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../expandjs/expandjs.html">
-<link rel="import" href="../xp-overlay-behavior/xp-overlay-behavior.html">
+<link rel="import" href="xp-overlay-behavior.html">
+<link rel="import" href="xp-overlay-styles.html">
 
 <dom-module id="xp-overlay">
 
-    <template>
+    <template strip-whitespace>
 
         <style include="xp-overlay-styles"></style>
 
-        <style>
-            :host {
-                margin: 16px;
-            }
-
-            :host #xpOverlayWrapper {
-                background: inherit;
-                height: 100%;
-                overflow: auto;
-            }
-        </style>
-
-        <div id="xpOverlayWrapper">
-            <content id="content"></content>
+        <div class="wrapper">
+            <div class="body">
+                <content></content>
+            </div>
         </div>
 
     </template>
@@ -60,89 +51,7 @@ This element is used to display itself above all others.
             // BEHAVIORS
             behaviors: [
                 Polymer.XPOverlayBehavior
-            ],
-
-            /*********************************************************************/
-
-            /**
-             * Aligns the overlay.
-             *
-             * @method _align
-             * @returns {Element}
-             * @private
-             */
-            _align: function () {
-                var self = this, target = self.showed && self.findTarget();
-                if (target) { XP.alignElement(self, target, self.position, self.autoCenter); } else { self.hide(); }
-                return self;
-            },
-
-            /*********************************************************************/
-
-            // OBSERVERS
-            observers: [
-                '_align(autoCenter, position, showed, target)'
-            ],
-
-            // PROPERTIES
-            properties: {
-
-                /**
-                 * If set to true, the overlay is center aligned.
-                 *
-                 * @attribute auto-center
-                 * @type boolean
-                 * @default false
-                 */
-                autoCenter: {
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: false
-                },
-
-                /**
-                 * The overlay position relative to the target.
-                 *
-                 * 'over' is over the target.
-                 *
-                 * 'aside' is to the side of the target.
-                 *
-                 * 'baseline' is underneath the target.
-                 *
-                 * @attribute position
-                 * @type "aside" | "baseline" | "over"
-                 * @default "over"
-                 */
-                position: {
-                    reflectToAttribute: true,
-                    type: String,
-                    value: 'over'
-                }
-            },
-
-            /**
-             * The list of positions.
-             *
-             * @property positions
-             * @type Array
-             * @default ["aside", "baseline", "over"]
-             * @readonly
-             */
-            positions: ['aside', 'baseline', 'over'],
-
-            /*********************************************************************/
-
-            // LISTENER
-            ready: function () {
-                this.listen(window, 'resize', '_handleResize');
-            },
-
-            /*********************************************************************/
-
-            // HANDLER
-            _handleResize: function () {
-                this._align();
-            }
+            ]
         });
     </script>
 
