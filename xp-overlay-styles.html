@@ -49,12 +49,14 @@ A stylesheet used to stylize an overlay element.
             :host .wrapper {
                 background: inherit;
                 border-radius: inherit;
+                box-sizing: border-box;
                 display: block;
                 height: 100%;
                 transform: translate3d(0, 0, 0);
             }
 
             :host .body {
+                box-sizing: border-box;
                 display: block;
                 height: 100%;
                 overflow-x: hidden;
