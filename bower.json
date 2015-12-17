@@ -3,7 +3,7 @@
   "license": "BSD-3-Clause",
   "version": "0.10.0",
   "main": "xp-overlay.html",
-  "description": "A custom element used to display a container above others.",
+  "description": "A custom element used to display a container above others",
   "homepage": "http://expandjs.com/elements/xp-overlay",
   "authors": [
     "Giuliano Rullo <g.rullo@expandjs.com>",
