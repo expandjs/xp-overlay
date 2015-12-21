@@ -32,6 +32,21 @@ A behavior used to add overlaying capabilities on a custom element.
     Polymer.XPOverlayBehaviorImp = {
 
         /**
+         * Fired on hide.
+         *
+         * @event xp-hide
+         * @param {Element} firer
+         */
+
+        /**
+         * Fired on show.
+         * @event xp-show
+         * @param {Element} firer
+         */
+
+        /*********************************************************************/
+
+        /**
          * Aligns the overlay.
          *
          * @method align
@@ -207,6 +222,9 @@ A behavior used to add overlaying capabilities on a custom element.
             // Vars
             var self   = this,
                 method = self.showed ? 'listen' : 'unlisten';
+
+            // Firing
+            if (self.isAttached) { self.fire(self.showed ? 'xp-show' : 'xp-hide', {firer: self}); }
 
             // Frame 1
             requestAnimationFrame(function () {
