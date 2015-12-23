@@ -32,36 +32,36 @@ A behavior used to add overlay injection capabilities on a custom element.
          * Injects the overlay.
          *
          * @method inject
-         * @param {string} tag
+         * @param {Element | string} element
          * @param {*} [data]
          * @param {Element} [host]
          */
-        inject: function (tag, data, host) {
+        inject: function (element, data, host) {
 
             // Asserting
-            XP.assertArgument(XP.isString(tag, true), 1, 'string');
+            XP.assertArgument(XP.isElement(element) || XP.isString(element, true), 1, 'Element or string');
             XP.assertArgument(XP.isVoid(host) || XP.isElement(host), 3, 'Element');
 
             // Vars
             var self     = this,
-                element  = document.createElement(tag),
                 shell    = XP.findParentElement(self, '.shell') || document.body,
-                current  = Polymer.dom(shell.root || shell).querySelector(tag = tag.toLowerCase()),
-                listener = XP.debounce(function () { return !element.showed && Polymer.dom(Polymer.dom(element).parentNode).removeChild(XP.unlisten(element, 'showed-changed', listener)); }, 500);
+                post     = XP.isString(element) ? document.createElement(element = element.toLowerCase()) : element,
+                pre      = XP.isString(element) ? Polymer.dom(shell.root || shell).querySelector(element) : null,
+                listener = XP.debounce(function () { return !post.showed && Polymer.dom(Polymer.dom(post).parentNode).removeChild(XP.unlisten(post, 'showed-changed', listener)); }, 500);
 
             // Hiding
-            if (current && current !== element) { current.hide(); }
+            if (pre && pre !== post) { pre.hide(); }
 
             // Appending
-            if (current !== element) { Polymer.dom(shell.root || shell).appendChild(element); }
+            if (pre !== post) { Polymer.dom(shell.root || shell).appendChild(post); }
 
             // Listening
-            if (current !== element) { XP.listen(element, 'showed-changed', listener); }
+            if (pre !== post) { XP.listen(post, 'showed-changed', listener); }
 
             // Showing
-            requestAnimationFrame(function () { requestAnimationFrame(element.show.bind(element, self, data || self.data)); });
+            requestAnimationFrame(function () { requestAnimationFrame(post.show.bind(post, self, data || self.data)); });
 
-            return element;
+            return post;
         }
     };
 </script>
