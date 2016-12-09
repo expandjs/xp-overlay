@@ -1,3 +1,3 @@
 # xp-overlay
 
-See the [`documentation page`](http://expandjs.com/elements/xp-overlay) for more information.
+This repository has been merged into [`xp-elements`](https://github.com/expandjs/xp-elements).
